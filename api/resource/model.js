@@ -1,4 +1,4 @@
-const db = require('.../data/dbConfig.js');
+const db = require('../../data/dbConfig');
 
 function getResources() {
   return db('resources as r').select(
@@ -9,7 +9,8 @@ function getResources() {
 }
 
 async function createResource(resource) {
-  return db('resources').insert(resource);
+  const [id] = await db('resources').insert(resource);
+  return getResources().where({ id }).first();
 }
 
 module.exports = {
